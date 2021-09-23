@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Gráfica Funciones</title>
+    <style>
+        body {
+            font-family: Fira Code;
+            background-color:powderblue;
+        }
+        canvas {
+            border:2px solid #461ddb; 
+            background-color: #FFFFFF;
+        }
+    </style>
+    <script>
+        function Limpiar() {
+            // Limpiar el área del gráfico
+            ctx.beginPath();
+            ctx.rect(0, 0, ancho, alto);
+            ctx.fillStyle = "white";
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function f(x) {
+            // Obtener objeto de la interfaz HTML
+            var cmbFuncion = document.getElementById("cmbFuncion");
+            switch (eval(cmbFuncion.value)) {
+                case 1:
+                    return Math.sin(x);
+                case 2:
+                    return Math.cos(x);
+                case 3:
+                    return Math.pow(x, 2);
+                case 4:
+                    return Math.pow(x, 3);
+            }
+        }
+
+        function graficar() {
+            // Obtener objeto de la interfaz HTML
+            var txtLi = document.getElementById("txtXInicial");
+            // Obtener el valor digitado en la caja de texto
+            var xMin = eval(txtLi.value);
+            // Obtener objeto de la interfaz HTML
+            var txtLs = document.getElementById("txtXFinal");
+            // Obtener el valor digitado en la caja de texto
+            var xMax = eval(txtLs.value);
+
+            var yMax = 0;
+            var yMin = 0;
+            var incX = (xMax - xMin) / ancho; // incremento de x
+
+            
+            for (var x = xMin; x < xMax; x += incX) {
+                var fx = f(x);
+                if (x == xMin) {
+                    yMax = fx;
+                    yMin = fx;
+                } else if (fx > yMax) {
+                    yMax = fx;
+                } else if (fx < yMin) {
+                    yMin = fx;
+                }
+            } // for
+
+            var incY = (yMax - yMin) / alto;
+
+            // limpiar canvas
+            Limpiar();
+
+            // trazar los ejes
+            if (xMin <= 0 && 0 <= xMax) {
+
+                xP = -xMin / incX;
+                // trazar eje Y
+                ctx.beginPath();
+                ctx.strokeStyle = "#333333"
+                ctx.moveTo(xP, alto); // punto de inicio
+                ctx.lineTo(xP, 0); // punto de llegada de la línea
+                ctx.closePath();
+                ctx.stroke();
+            }
+
+            if (yMin <= 0 && 0 <= yMax){
+                yP = -yMin / incY;
+                // trazar eje X
+                ctx.beginPath();
+                ctx.strokeStyle = "#333333";
+                ctx.moveTo(0, yP);
+                ctx.lineTo(ancho, yP);
+                ctx.closePath();
+                ctx.stroke();
+            }
+
+
+        } // graficar
+
+    </script>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <td colspan="2">
+                <h2>Gráfica de Funciones</h2>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Función
+            </td>
+            <td>
+                <!--lista desplegable-->
+                <select id="cmbFuncion">
+                    <option value="1">Seno</option>
+                    <option value="2">Coseno</option>
+                    <option value="3">Cuadrática</option>
+                    <option value="4">Cúbica</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                x inicial
+            </td>
+            <td>
+                <!--caja de texto-->
+                <input type="number" id="txtXInicial">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                x final
+            </td>
+            <td>
+                <input type="number" id="txtXFinal">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button onclick="graficar();" title="Mostrar gráfica de la función escogida">
+                    <img src="assets/img/axis.png"><br>
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <canvas id="cnvGrafica" width="600" height="400"></canvas>
+            </td>
+        </tr>
+    </table>
+</body>
+
+<script>
+    // -- VARIABLE GLOBALES --
+    // Obtener objeto de la interfaz HTML
+    var cnv = document.getElementById("cnvGrafica");
+    // obtener el graficador de canvas
+    var ctx = cnv.getContext("2d");
+    // Dimensiones del área de la gráfica
+    var ancho = cnv.width;
+    var alto = cnv.height;
+</script>
+
+</html>

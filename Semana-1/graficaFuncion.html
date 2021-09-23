@@ -1,21 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 
 <head>
-    <title>Gráfica Funciones</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
     <style>
         body {
-            font-family: Fira Code;
-            background-color:powderblue;
+            margin: 2%;
         }
+
         canvas {
-            border:2px solid #461ddb; 
+            border: 2px solid #461ddb;
             background-color: #FFFFFF;
         }
     </style>
+    <title>Grafica Función</title>
     <script>
+
         function Limpiar() {
-            // Limpiar el área del gráfico
             ctx.beginPath();
             ctx.rect(0, 0, ancho, alto);
             ctx.fillStyle = "white";
@@ -23,8 +29,9 @@
             ctx.closePath();
         }
 
+
         function f(x) {
-            // Obtener objeto de la interfaz HTML
+            //Obtener objeto de la interfaz HTML
             var cmbFuncion = document.getElementById("cmbFuncion");
             switch (eval(cmbFuncion.value)) {
                 case 1:
@@ -38,67 +45,89 @@
             }
         }
 
+        function trazarLinea(x1, y1, x2, y2) {
+            ctx.beginPath();
+            ctx.strokeStyle = "#333333";
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.closePath();
+            ctx.stroke();
+        }
+
         function graficar() {
-            // Obtener objeto de la interfaz HTML
-            var txtLi = document.getElementById("txtXInicial");
-            // Obtener el valor digitado en la caja de texto
-            var xMin = eval(txtLi.value);
-            // Obtener objeto de la interfaz HTML
-            var txtLs = document.getElementById("txtXFinal");
-            // Obtener el valor digitado en la caja de texto
-            var xMax = eval(txtLs.value);
+            //Obtener objeto de la interfaz HTML
+            var txtLI = document.getElementById("txtXInicial");
+            //Obtener el valor digitado en la caja de texto
+            var xMin = eval(txtLI.value);
+            //Obtener objeto de la interfaz HTML
+            var txtLS = document.getElementById("txtXFinal");
+            //Obtener el valor digitado en la caja de texto
+            var xMax = eval(txtLS.value);
+
+
+
+
 
             var yMax = 0;
             var yMin = 0;
-            var incX = (xMax - xMin) / ancho; // incremento de x
+            var incX = (xMax - xMin) / ancho;
 
-            
             for (var x = xMin; x < xMax; x += incX) {
                 var fx = f(x);
                 if (x == xMin) {
                     yMax = fx;
                     yMin = fx;
-                } else if (fx > yMax) {
+                }
+                else if (fx > yMax) {
                     yMax = fx;
-                } else if (fx < yMin) {
+                }
+                else if (fx < yMin) {
                     yMin = fx;
                 }
-            } // for
-
+            }
             var incY = (yMax - yMin) / alto;
 
-            // limpiar canvas
+
             Limpiar();
 
-            // trazar los ejes
+
+            var xP = 0;
+            var yP = 0;
+
+            //trazar los ejes
             if (xMin <= 0 && 0 <= xMax) {
 
                 xP = -xMin / incX;
                 // trazar eje Y
-                ctx.beginPath();
-                ctx.strokeStyle = "#333333"
-                ctx.moveTo(xP, alto); // punto de inicio
-                ctx.lineTo(xP, 0); // punto de llegada de la línea
-                ctx.closePath();
-                ctx.stroke();
+                trazarLinea(xP, yP, xP, alto)
             }
 
-            if (yMin <= 0 && 0 <= yMax){
+            if (yMin <= 0 && 0 <= yMax) {
                 yP = -yMin / incY;
                 // trazar eje X
-                ctx.beginPath();
-                ctx.strokeStyle = "#333333";
-                ctx.moveTo(0, yP);
-                ctx.lineTo(ancho, yP);
-                ctx.closePath();
-                ctx.stroke();
+                trazarLinea(0, yP, ancho, yP);
+
             }
 
+            // Trazar la gráfica
+            var xP0 = 0;
+            var x = xMin;
+            var y = f(xMin);
+            var xP0 = y - yMin / incY;
+            for (xP = 1; xP <= ancho; xP++) {
 
-        } // graficar
+            }
+            // window.alert("y max="+yMax+", yMin="+yMin);
+
+
+        }//graficar
+
 
     </script>
 </head>
+<!-- 
+        esto es un comentario
+    -->
 
 <body>
     <table>
@@ -112,56 +141,59 @@
                 Función
             </td>
             <td>
-                <!--lista desplegable-->
                 <select id="cmbFuncion">
                     <option value="1">Seno</option>
                     <option value="2">Coseno</option>
-                    <option value="3">Cuadrática</option>
+                    <option value="3">Cuadrátrica</option>
                     <option value="4">Cúbica</option>
                 </select>
             </td>
         </tr>
         <tr>
             <td>
-                x inicial
+                X inicial
             </td>
             <td>
-                <!--caja de texto-->
                 <input type="number" id="txtXInicial">
             </td>
         </tr>
         <tr>
             <td>
-                x final
+                X final
             </td>
             <td>
-                <input type="number" id="txtXFinal">
+                <input type="number" id=txtXFinal>
             </td>
         </tr>
         <tr>
             <td colspan="2">
-                <button onclick="graficar();" title="Mostrar gráfica de la función escogida">
-                    <img src="assets/img/axis.png"><br>
+                <button type="button" class="btn btn-outline-dark" onclick="graficar();"
+                    title="Realizar gráfica cartesiana de la función escogida">
+                    <img src="assets/img/axis.png">Graficar
                 </button>
             </td>
         </tr>
         <tr>
             <td colspan="2">
-                <canvas id="cnvGrafica" width="600" height="400"></canvas>
+                <canvas width="600" height="400" style="border:1px solid #BBBBBB;" id="cnvGrafica"></canvas>
             </td>
         </tr>
     </table>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+        crossorigin="anonymous"></script>
 </body>
 
 <script>
-    // -- VARIABLE GLOBALES --
-    // Obtener objeto de la interfaz HTML
+    //Obtener objeto de la interfaz HTML
     var cnv = document.getElementById("cnvGrafica");
-    // obtener el graficador de canvas
+    //obtener el graficador del canvas
     var ctx = cnv.getContext("2d");
-    // Dimensiones del área de la gráfica
+    //Dimensiones del area de la grafica
     var ancho = cnv.width;
     var alto = cnv.height;
+
 </script>
 
 </html>

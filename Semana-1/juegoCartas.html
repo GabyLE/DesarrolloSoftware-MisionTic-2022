@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"> -->
+
+    <title>Juego de Apuntado</title>
+    <script src="assets/app/Carta.js"></script>
+    <link href="assets/css/styles.css" rel="stylesheet" type="text/css">
+    <script>
+        // Vector que almacenará las cartas
+        var cartas = [];
+
+        function repartir() {
+            // Obtener el objeto para despliegue de las cartas
+            var mesa = document.getElementById("mesa");
+            if (cartas.length > 0) {
+                for (var i = 0; i < 10; i++) {
+                    let obj = document.getElementById("carta" + i.toString());
+                    obj.remove();
+                }
+            }
+            cartas = [];
+
+            for (var i = 0; i < 10; i++) {
+                // Crear una instancia de CARTA
+                var carta = new Carta();
+                // Agregar la carta al vector
+                cartas.push(carta);
+
+                // Crear una elemento para mostrar la imagen de la carta
+                var imgCarta = document.createElement("img");
+                // Asignar la imagen de la carta obtenida
+                imgCarta.src = carta.obtenerImagen();
+                imgCarta.id = "carta" + i;
+                // Agregar la imagen
+                mesa.appendChild(imgCarta);
+            }
+        } // repartir
+
+        function chequear() {
+            if (cartas.length > 0) {
+                // iniciar contadores de nombres de carta en 0
+                var contador = [];
+                for (var i = 0; i < 13; i++) {
+                    contador.push(0);
+                }
+                // recorrer cada carta e incrementar el respectivo de nombre
+                for (var i = 0; i < cartas.length; i++) {
+                    contador[cartas[i].obtenerIndiceNombre()]++;
+                }
+
+                let grupo = ["vacío", "non", "par", "terna", "cuarta", "quinta", "sexta", "séptima"];
+                let nombre = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+                let mensaje = "Se encontraron los siguientes grupos";
+
+                for (var i = 0; i < 13; i++) {
+                    if (contador[i] >= 2){
+                        mensaje += "\n" + grupo[contador[i]] + " de " + nombre[i];
+                    }
+                }
+
+                window.alert(mensaje);
+
+            } else {
+                window.alert("No hay cartas repartidas")
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+    <div class="botones">
+        <button onclick="repartir();">
+            <img src="assets/img/Iconos/Repartir.png">
+        </button>
+
+        <button onclick="chequear();">
+            <img src="assets/img/Iconos/Verificar.png">
+        </button>
+    </div>
+
+    <div id="mesa"></div>
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+        crossorigin="anonymous"></script> -->
+</body>

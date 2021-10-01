@@ -45,9 +45,9 @@
             }
         }
 
-        function trazarLinea(x1, y1, x2, y2) {
+        function trazarLinea(x1, y1, x2, y2, color) {
             ctx.beginPath();
-            ctx.strokeStyle = "#333333";
+            ctx.strokeStyle = color;
             ctx.moveTo(x1, y1);
             ctx.lineTo(x2, y2);
             ctx.closePath();
@@ -99,23 +99,33 @@
 
                 xP = -xMin / incX;
                 // trazar eje Y
-                trazarLinea(xP, yP, xP, alto)
+                trazarLinea(xP, yP, xP, alto, "#333333")
             }
 
             if (yMin <= 0 && 0 <= yMax) {
                 yP = -yMin / incY;
                 // trazar eje X
-                trazarLinea(0, yP, ancho, yP);
+                trazarLinea(0, yP, ancho, yP, "#333333");
 
             }
 
             // Trazar la gráfica
-            var xP0 = 0;
+            // obtener punto inicial
             var x = xMin;
-            var y = f(xMin);
-            var xP0 = y - yMin / incY;
+            var y = f(x);
+            var xP0 = 0; //coordenada X pixel
+            var yP0 = (yMax - y) / incY; // pcoordenada Y pixel
             for (xP = 1; xP <= ancho; xP++) {
-
+                // obtener siguiente punto
+                x += incX;
+                y = f(x);
+                yP = (yMax - y)/incY
+                
+                // trazar la línea
+                trazarLinea(xP0, yP0, xP, yP, "#FF0000");
+                // actualizar punto inicial
+                xP0 = xP;
+                yP0 = yP;
             }
             // window.alert("y max="+yMax+", yMin="+yMin);
 
@@ -125,9 +135,6 @@
 
     </script>
 </head>
-<!-- 
-        esto es un comentario
-    -->
 
 <body>
     <table>

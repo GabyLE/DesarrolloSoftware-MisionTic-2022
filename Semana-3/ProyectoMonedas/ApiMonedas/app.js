@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const puerto = 3000;
+const puerto = 3010;
 
 app.get('/', (req, res) => {
     res.send('Servicio de BD Monedas en funcionamiento');
@@ -10,9 +10,10 @@ app.get('/', (req, res) => {
 // var bodyParser = require('body-parser');
 // app.use(bodyParser.json());
 app.use(express.json());
-// //Cargar libreria para habilitar cors
-// const cors = require('cors')
-// app.use(cors())
+
+//Cargar libreria para habilitar cors
+const cors = require('cors')
+app.use(cors())
 
 require("./routes/moneda.rutas")(app);
 require("./routes/pais.rutas")(app);

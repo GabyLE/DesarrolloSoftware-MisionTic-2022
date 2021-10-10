@@ -7,8 +7,9 @@ app.get('/', (req, res) => {
 });
 
 //Cargar librería para 'parseo' de contenido JSON
-var bodyParser = require('body-parser');
-app.use(bodyParser.json());
+// var bodyParser = require('body-parser');
+// app.use(bodyParser.json());
+app.use(express.json());
 // //Cargar libreria para habilitar cors
 // const cors = require('cors')
 // app.use(cors())

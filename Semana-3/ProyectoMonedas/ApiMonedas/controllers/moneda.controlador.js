@@ -36,7 +36,7 @@ exports.listar = (req, res) => {
     });
 }
 
-//Metodo web para obtener una moneda
+//Metodo web para actualizar una moneda
 exports.actualizar = (req, res) => {
     //validar que la solicitud tenga datos
     if (!req.body) {

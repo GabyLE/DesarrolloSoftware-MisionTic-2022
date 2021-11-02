@@ -59,6 +59,8 @@ exports.actualizar = (req, res) => {
                 res.header('Access-Control-Allow-Origin', '*');
                 res.send(data);
             }
+
+            console.log(data);
         });
 }
 

@@ -50,6 +50,7 @@ Moneda.actualizar = (moneda, resultado) => {
     sql.query('CALL spActualizarMoneda(?, ?, ?, ?, ?);', //consulta sql
         [moneda.id, moneda.moneda, moneda.sigla, moneda.simbolo, moneda.emisor], //parametros
         (err, res) => {
+            console.log(res);
             //Verificar si hubo error ejecutando la consulta
             if (err) {
                 console.log("Error actualizando moneda:", err);

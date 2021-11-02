@@ -250,3 +250,15 @@ BEGIN
 		WHERE Usuario=UsuarioV
 			AND Clave=ClaveV;
 END//
+
+DELIMITER //
+CREATE PROCEDURE spActualizarClaveUsuario(
+IN UsuarioA varchar(50),
+IN ClaveA varchar(100)
+)
+BEGIN
+	UPDATE Usuario
+		SET Clave=ClaveA
+		WHERE Usuario=UsuarioA;
+END//
+

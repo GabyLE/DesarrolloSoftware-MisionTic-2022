@@ -40,6 +40,7 @@ const Formulario = ({ cerrarFormulario }) => {
             })
         }).then((res) => res.json())
             .then((json) => {
+                //window.alert(json.Nombre);
                 const usuarioLogueado = {
                     id: json.Id,
                     usuario: json.Usuario,
